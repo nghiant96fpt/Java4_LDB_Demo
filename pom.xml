@@ -28,9 +28,9 @@
 	    <version>13.2.0.jre11</version>
 	    <scope>compile</scope>
 	</dependency>
-	<!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-core -->
+	<!-- https://mvnrepository.com/artifact/org.hibernate.orm/hibernate-core -->
 	<dependency>
-	    <groupId>org.hibernate</groupId>
+	    <groupId>org.hibernate.orm</groupId>
 	    <artifactId>hibernate-core</artifactId>
 	    <version>7.1.0.Final</version>
 	</dependency>

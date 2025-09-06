@@ -37,7 +37,7 @@ public class Video {
 	private String url;
 
 	@OneToMany(mappedBy = "video")
-	private List<Video> videos;
+	private List<Like> likes;
 
 	@OneToMany(mappedBy = "video")
 	private List<Share> shares;
@@ -47,7 +47,7 @@ public class Video {
 	}
 
 	public Video(int id, boolean active, String desc, String poster, String title, int views, String url,
-			List<Video> videos, List<Share> shares) {
+			List<Like> likes, List<Share> shares) {
 		super();
 		this.id = id;
 		this.active = active;
@@ -56,16 +56,16 @@ public class Video {
 		this.title = title;
 		this.views = views;
 		this.url = url;
-		this.videos = videos;
+		this.likes = likes;
 		this.shares = shares;
 	}
 
-	public List<Video> getVideos() {
-		return videos;
+	public List<Like> getVideos() {
+		return likes;
 	}
 
-	public void setVideos(List<Video> videos) {
-		this.videos = videos;
+	public void setVideos(List<Like> likes) {
+		this.likes = likes;
 	}
 
 	public List<Share> getShares() {
