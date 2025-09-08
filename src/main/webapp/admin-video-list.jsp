@@ -36,7 +36,7 @@
 			      </th>
 			      <th>${item.active ? 'Hiển thị' : 'Ẩn'}</th>
 			      <th>
-			      	<button class="btn btn-warning">Sửa</button>
+			      	<a class="btn btn-warning" href="${pageContext.request.contextPath}/admin/video-form?id=${item.id}">Sửa</a>
 			      	<form method="POST"
 			      		action="${pageContext.request.contextPath}/admin/video-delete">
 			      		<input name="id" value="${item.id}" type="hidden"/>

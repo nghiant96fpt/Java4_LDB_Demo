@@ -11,7 +11,7 @@
 	<div class="container">
 		<div class="col-6 offset-3">
 			<form method="POST"
-			action="${pageContext.request.contextPath}/admin/video-form">
+			action="${pageContext.request.contextPath}/admin/video-form${id != null ? '?id=' : ''}${id}">
 				<div class="mb-3">
 				  <label class="form-label">Tiêu đề</label>
 				  <input value="${title}" name="title" type="text" class="form-control">
@@ -39,20 +39,20 @@
 				<div class="mb-3">
 				  <label class="form-label">Trạng thái</label>
 				  <div class="form-check">
-					  <input name="status" value="1" checked class="form-check-input" type="radio" id="flexRadioDefault1">
+					  <input name="status" value="1" ${status == "1" ? 'checked' : ''} class="form-check-input" type="radio" id="flexRadioDefault1">
 					  <label class="form-check-label" for="flexRadioDefault1">
 					    Hiển thị
 					  </label>
 					</div>
 					<div class="form-check">
-					  <input name="status" value="0" class="form-check-input" type="radio" id="flexRadioDefault2">
+					  <input name="status" value="0" ${status == "0" ? 'checked' : ''} class="form-check-input" type="radio" id="flexRadioDefault2">
 					  <label class="form-check-label" for="flexRadioDefault2">
 					   	Ẩn
 					  </label>
 					</div>
 				</div>
 				
-				<input type="submit" class="btn btn-primary" value="Thêm video"/>
+				<input type="submit" class="btn btn-primary" value="${id != null ? 'Sửa video' : 'Thêm video'}"/>
 			</form>
 		</div>
 	</div>

@@ -17,6 +17,33 @@ public class VideoFormController extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
+		String id = req.getParameter("id");
+
+		if (id != null) {
+//			chức năng sửa 
+
+			VideoDAO videoDAO = new VideoDAO();
+
+			Video video = videoDAO.findById(id);
+
+			if (video != null) {
+//				Thực hiện gửi dữ liệu 
+
+				req.setAttribute("id", video.getId());
+				req.setAttribute("title", video.getTitle());
+				req.setAttribute("desc", video.getDesc());
+				req.setAttribute("urlImage", video.getPoster());
+				req.setAttribute("urlVideo", video.getUrl());
+				req.setAttribute("status", video.isActive() ? "1" : "0");
+			} else {
+				resp.sendRedirect(req.getContextPath() + "/admin/video-list");
+				return;
+			}
+
+		}
+
+//		Chức năng thêm 
+
 		req.getRequestDispatcher("/admin-video-form.jsp").forward(req, resp);
 	}
 
@@ -32,6 +59,7 @@ public class VideoFormController extends HttpServlet {
 		String urlImage = req.getParameter("urlImage");
 		String urlVideo = req.getParameter("urlVideo");
 		String status = req.getParameter("status");
+		String id = req.getParameter("id");
 
 //		Gửi dữ liệu đã nhập từ các ô input để hiển thị lại 
 		req.setAttribute("title", title.trim());
@@ -39,6 +67,7 @@ public class VideoFormController extends HttpServlet {
 		req.setAttribute("urlImage", urlImage);
 		req.setAttribute("urlVideo", urlVideo);
 		req.setAttribute("status", status);
+		req.setAttribute("id", id);
 
 //		Thực hiện kiểm tra lỗi của form 
 //		- tiêu đề không rỗng
@@ -80,9 +109,22 @@ public class VideoFormController extends HttpServlet {
 			video.setPoster(urlImage);
 			video.setUrl(urlVideo);
 			video.setActive(status.equals("1"));
+			video.setViews(0);
 
-			videoDAO.insert(video);
+			if (id != null) {
+				Video videoDB = videoDAO.findById(id);
+				video.setViews(videoDB.getViews());
+
+				video.setId(Integer.parseInt(id));
+
+				videoDAO.update(video);
+			} else {
+				videoDAO.insert(video);
+			}
+
 			videoDAO.closeConnect();
+			resp.sendRedirect(req.getContextPath() + "/admin/video-list");
+			return;
 		}
 
 		req.getRequestDispatcher("/admin-video-form.jsp").forward(req, resp);

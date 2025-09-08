@@ -4,6 +4,7 @@ import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -36,7 +37,7 @@ public class Video {
 	@Column(name = "url", nullable = false, columnDefinition = "NVARCHAR (255)")
 	private String url;
 
-	@OneToMany(mappedBy = "video")
+	@OneToMany(mappedBy = "video", fetch = FetchType.EAGER)
 	private List<Like> likes;
 
 	@OneToMany(mappedBy = "video")
@@ -60,7 +61,7 @@ public class Video {
 		this.shares = shares;
 	}
 
-	public List<Like> getVideos() {
+	public List<Like> getLikes() {
 		return likes;
 	}
 

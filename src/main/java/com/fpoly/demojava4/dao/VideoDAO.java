@@ -103,4 +103,49 @@ public class VideoDAO {
 
 		return videos;
 	}
+
+	public List<Video> findByName(String name) {
+		List<Video> videos = new ArrayList<Video>();
+
+		try {
+
+			String[] keyword = name.trim().split(" ");
+//			AI sssa,jd Agent as n8n
+
+//			=> ["AI", "Agent", "n8n"]
+
+//			SELECT * FROM videos WHERE title LIKE '%AI%'
+
+			String sqlNative = "SELECT * FROM videos WHERE title LIKE '%" + keyword[0] + "%'";
+
+			if (keyword.length > 1) {
+				for (int index = 1; index < keyword.length; index++) {
+					sqlNative += " OR title LIKE '%" + keyword[index] + "%'";
+				}
+			}
+
+			System.out.println(sqlNative);
+
+			Query query = manager.createNativeQuery(sqlNative, Video.class);
+
+			videos = query.getResultList();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return videos;
+	}
+
+	public void addViews(String id) {
+		try {
+			Video video = this.findById(id);
+//			tăng lượt xem lên 1
+			video.setViews(video.getViews() + 1);
+
+			this.update(video);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 }
